@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "HakatonServer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "client": "npm run start --prefix webclient",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
+  },
+  "author": "Maksim Dmitriev, Mihail Toropchinov",
+  "license": "ISC",
+  "dependencies": {
+    "@std/esm": "^0.26.0",
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.3.0",
+    "config": "^3.3.2",
+    "crypto": "^1.0.1",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.9",
+    "nodemon": "^2.0.5",
+    "pdfmake": "^0.1.68",
+    "react-datepicker": "^3.3.0",
+    "react-router-dom": "^5.2.0",
+    "sqlite3": "^5.0.0"
+  }
+}
