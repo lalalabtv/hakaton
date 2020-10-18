@@ -3,7 +3,7 @@ const Object = require('../../models/Objects')
 const Defect = require('../../models/Defect')
 const auth = require('../../middleware/auth.middleware')
 const router = Router()
-import '../UnusedLib/priority'
+import '../Functions/priority'
 
 router.get('/check', auth, async (req , res) => {
     try{

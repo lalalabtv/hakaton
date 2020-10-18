@@ -43,6 +43,8 @@ router.post(
                 { expiresIn: '1h' }
             )
 
+            console.log('Пользователь авторизовался');
+
             res.json({token , userId: user.id })
 
 
