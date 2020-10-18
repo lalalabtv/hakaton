@@ -75,7 +75,7 @@ export const AuthPage = () => {
                     <div className="card-action" style={{justifyContent:"center",color:"black"}}>
                         <p style={{color:"black"}}>
                             <button className="btn white darken-4" style={{marginRight: 10, color: "black"}} onClick={loginHandler} >Войти</button>
-                            <button className="btn white darken-4" style={{marginRight: 10, color: "black"}}><Link to="/register" className="linked">Регистрация</Link></button>
+
                         </p>
                     </div>
                 </div>

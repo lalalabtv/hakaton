@@ -15,6 +15,9 @@ export const useRoutes = isAuthenticated => {
                 <Route path="/addtask" exact>
                     <CreatePage />
                 </Route>
+                <Route path="/register" exact>
+                    <RegisterPage />
+                </Route>
                 <Redirect to="/tasks" />
             </Switch>
         )
@@ -24,9 +27,6 @@ export const useRoutes = isAuthenticated => {
         <Switch>
             <Route path="/" exact>
                 <AuthPage />
-            </Route>
-            <Route path="/register" exact>
-                <RegisterPage />
             </Route>
             <Redirect to="/" />
         </Switch>

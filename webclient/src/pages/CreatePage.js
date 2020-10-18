@@ -1,20 +1,54 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import {useHttp} from "../hooks/http.hook";
 import {useHistory} from "react-router-dom";
 import {useMessage} from "../hooks/message.hook";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Brigades} from "../components/Brigades";
+import {Objects} from "../components/Objects";
+
 
 
 export const CreatePage = () => {
     const [place, setPlace] = useState( ' ')
     const history = useHistory();
     const [brigade, setBrigade] = useState( ' ')
-    const [date, setDate] = useState( ' ')
+    const [brigades, setBrigades] = useState([])
+    const [objects, setObjects] = useState( [])
+    const [startDate, setStartDate] = useState( new Date())
     const auth = useContext(AuthContext)
     const {loading,request, error, clearError} = useHttp()
     const message = useMessage();
-    const [endDate, setendDate] = useState(new Date())
+    const {token} = useContext(AuthContext)
+
+    const fetchBrigades = useCallback(async () => {
+        try{
+            const fetched = await request('/api/b/lst', 'GET' , null , {
+                Authorization: `Bearer ${token}`
+            })
+            setBrigades(fetched)
+        }catch (e) {}
+    }, [token, request])
+
+    const fetchObjects = useCallback(async () => {
+        try{
+            const fetched = await request('/api/o/list', 'GET' , null , {
+                Authorization: `Bearer ${token}`
+            })
+            setBrigades(fetched)
+        }catch (e) {}
+    }, [token, request])
+
+    useEffect(()=>{
+        fetchObjects()
+    },[fetchObjects])
+
+    useEffect(()=>{
+        fetchBrigades()
+    },[fetchBrigades])
+
+
 
     useEffect(() => {
         message(error);
@@ -27,7 +61,7 @@ export const CreatePage = () => {
 
     const pressHandler = async () =>{
         try{
-            const data = await request('/api/tsk/createTask', 'POST', {fio: brigade, place: place, datePreventStart: date, dateStart: date, dateEnd: endDate}, {
+            const data = await request('/api/tsk/createTask', 'POST', {fio: brigade, place: place, datePreventStart: startDate, dateStart: startDate}, {
             Authorization: `Bearer ${auth.token}`
              })
             history.push('/tasks')
@@ -43,61 +77,37 @@ export const CreatePage = () => {
 
             <div className="input-field" style={{marginTop:'25px', alignItems:"center"}}>
                 <i className="material-icons prefix">edit_location</i>
-                <input placeholder="Введите место планового осмотра"
-                       id="place"
-                       type="text"
-                       className="red-input"
-                       style={{border:"4px black", color:"black"}}
-                       onChange={e => setPlace(e.target.value)}
-                       value={place}
-                />
-                <label htmlFor="name">Место</label>
+                <div style={{marginLeft: '50px'}}>
+                    <select className="browser-default" onChange={e=> setPlace(e.target.value)}>
+                        <option value="" disabled selected>Выберите объект</option>
+                        <Objects objects={objects}/>
+                    </select>
+
+                </div>
             </div>
             <div className="inputs">
-                <div className="input-field">
-                    <i className="material-icons prefix">info</i>
-                    <input placeholder="Введите номер бригады"
-                           id="brigade"
-                           type="text"
-                           className="red-input"
-                           value={brigade}
-                           style={{border:"4px black"}}
-                           onChange={e => setBrigade(e.target.value)}
+                <div className="input-field" id="brigade">
+                    <i className="material-icons prefix">people</i>
+                    <div style={{marginLeft: '50px'}}>
+                        <select className="browser-default" onChange={e=> setBrigade(e.target.value)}>
+                            <option value="" disabled selected>Выберите бригаду</option>
+                            <Brigades brigades={brigades}/>
+                        </select>
 
-                           width="800"
-                    />
-                    <label htmlFor="brigade">Номер бригады</label>
+                    </div>
+
                 </div>
             </div>
             <div className="inputs">
                 <div className="input-field">
                     <i className="material-icons prefix">event</i>
-                    <input placeholder="Введите дату выполнения"
-                           id="date"
-                           type="text"
-                           className="red-input"
-                           value={date}
-                           style={{border:"4px black"}}
-                           onChange={e => setDate(e.target.value)}
+                    <label>Дата начала работ</label>
+                    <div style={{marginLeft: '200px'}}>
+                        <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                    </div>
 
-                           width="800"
-                    />
-                    <label htmlFor="date">Время начала</label>
                 </div>
-                <div className="input-field">
-                    <i className="material-icons prefix">event</i>
-                    <input placeholder="Введите дату окончания"
-                           id="enddate"
-                           type="text"
-                           className="red-input"
-                           value={endDate}
-                           style={{border:"4px black"}}
-                           onChange={e => setendDate(e.target.value)}
 
-                           width="800"
-                    />
-                    <label htmlFor="enddate">Время окончания</label>
-                </div>
                 <button className="btn white darken-4"
                         style={{marginRight: 10, color:"black"}}
                         onClick={pressHandler}

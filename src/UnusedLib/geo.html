@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>Кликните и разрешите, для получения координат.</p>
+    <button onclick="getLocation()">Определить местоположение.</button>
+    <p id="loc"></p>
+    <script language="JavaScript">
+	function onWorkplace(){
+        var coordinates = document.getElementById("loc");
+        
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else {
+                coordinates.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position) {
+            var forshirota = 61.8;
+            var fordolgota = 111;
+            var latitudetask = 1;
+            var longitudetask = 1;
+	    var x;
+	    var y;
+            var z; 
+            var pogreshnost = 0.1;
+x = (position.coords.latitude - latitudetask) * forshirota;
+y = (position.coords.longitude - longitudetask) * fordolgota;
+z = Math.pow(Math.pow(x, 2) + Math.pow(y, 2), 0,5); //Расстояние между рабочим и точкой задания.
+if (z>pogreshnost)
+{
+//coordinates.innerHTML = "Рабочий не на месте проведения работы." + "<br>Широта: " + position.coords.latitude + "<br>Долгота: " + position.coords.longitude;
+return false;
+}
+else
+{
+return true;
+//coordinates.innerHTML = "Рабочий на месте проведения работы." + "<br>Широта: " + position.coords.latitude + "<br>Долгота: " + position.coords.longitude;
+}           
+        }
+
+ document.write(Date());
+	}
+    </script>
+</body>
+</html>

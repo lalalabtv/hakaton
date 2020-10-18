@@ -6,7 +6,9 @@ const schema = new Schema({
     dateStart: {type: String , required:true, default: 1},
     dateEnd: {type: String, required: true,default: 1},
     place: {type: String, required: true},
-    confirmed: {type: String, required:true, default: "В процессе"}
+    confirmed: {type: String, required:true, default: "Ожидается"},
+    defects: [{type: Types.ObjectId, ref: 'Defect'}],
+    deadLine: {type: String, default: 1}
 })
 
 module.exports= model('Task', schema)

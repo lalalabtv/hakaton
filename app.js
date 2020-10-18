@@ -10,6 +10,8 @@ app.use('/api/create', require('./src/Routes/Register.routes'))
 app.use('/api/auth', require('./src/Routes/Auth.routes'))
 app.use('/api/tsk', require('./src/Routes/CreateTask.routes'))
 app.use('/api/t', require('./src/Routes/TaskLst.route'))
+app.use('/api/b', require('./src/Routes/Brigade.routes'))
+app.use('/api/o', require('./src/Routes/Object.routes'))
 
 const PORT = config.get('port') || 5001
 
