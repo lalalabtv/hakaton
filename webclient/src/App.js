@@ -6,6 +6,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import {Loader} from "./components/Loader";
 import {AuthContext} from "./context/AuthContext";
 import {Navbar} from "./components/NavBar";
+import {Footer} from "./components/Footer";
 
 
 function App() {
