@@ -1,20 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 
-export const Objects = ({objects}) => {
+export const Obj = ({objects}) => {
+
     if(!objects.length){
-        return <p className="center">Нет доступных бригад</p>
+        return <p className="center">Нет доступных объектов</p>
     }
+
+
 
     return(
         <>
             { objects.map(party => {
                 return(
-                    <option value={party.name}>{party.name}</option>
+                    <option value={party.id}>{party.name}</option>
                 )
             }) }
         </>
 
     )
+
 
 }

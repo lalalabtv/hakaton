@@ -13,7 +13,7 @@ export const Brigades = ({brigades}) => {
         <>
             { brigades.map(party => {
                 return(
-                    <option value={party.name}>{party.name}</option>
+                    <option value={party.id}>{party.name}</option>
                 )
             }) }
         </>

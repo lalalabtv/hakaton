@@ -14,7 +14,7 @@ export const Navbar = () => {
     return (
         <nav>
             <div className="nav-wrapper black-text white">
-                <a href="/" className="brand-logo" style={{marginLeft: 10, color:"black"}}>Россети</a>
+                <a href="/" className="brand-logo" style={{marginLeft: 10, color:"black"}}>РОССЕТИ</a>
                 <ul id="nav-mobile" className="right black-text hide-on-med-and-down" style={{color:"black"}}>
                     <li><NavLink to="/addtask" className="l_element">Новая задача</NavLink></li>
                     <li><NavLink to="/" className="l_element">Список задач</NavLink></li>

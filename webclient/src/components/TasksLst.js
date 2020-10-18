@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 export const TasksLst = ({tasks}) => {
     if(!tasks.length){
-        return <p className="center">Мероприятий пока нет</p>
+        return <p className="center">Список задач пуст</p>
     }
     var status;
 

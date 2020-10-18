@@ -3,10 +3,13 @@ import {AuthContext} from "../context/AuthContext";
 import {useHttp} from "../hooks/http.hook";
 import {useHistory} from "react-router-dom";
 import {useMessage} from "../hooks/message.hook";
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale, setDefaultLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Brigades} from "../components/Brigades";
-import {Objects} from "../components/Objects";
+import {Obj} from "../components/Objects";
+import ru from 'date-fns/locale/ru'
+registerLocale('ru', ru)
+setDefaultLocale('ru')
 
 
 
@@ -33,10 +36,10 @@ export const CreatePage = () => {
 
     const fetchObjects = useCallback(async () => {
         try{
-            const fetched = await request('/api/o/list', 'GET' , null , {
+            const fetchedO = await request('/api/o/list', 'GET' , null , {
                 Authorization: `Bearer ${token}`
             })
-            setBrigades(fetched)
+            setObjects(fetchedO)
         }catch (e) {}
     }, [token, request])
 
@@ -61,7 +64,7 @@ export const CreatePage = () => {
 
     const pressHandler = async () =>{
         try{
-            const data = await request('/api/tsk/createTask', 'POST', {fio: brigade, place: place, datePreventStart: startDate, dateStart: startDate}, {
+            const data = await request('/api/tsk/createTask', 'POST', {fio: brigade, place: place, datePreventStart: startDate.toLocaleDateString(), dateStart: startDate.toLocaleDateString()}, {
             Authorization: `Bearer ${auth.token}`
              })
             history.push('/tasks')
@@ -80,7 +83,7 @@ export const CreatePage = () => {
                 <div style={{marginLeft: '50px'}}>
                     <select className="browser-default" onChange={e=> setPlace(e.target.value)}>
                         <option value="" disabled selected>Выберите объект</option>
-                        <Objects objects={objects}/>
+                        <Obj objects={objects}/>
                     </select>
 
                 </div>
@@ -103,7 +106,17 @@ export const CreatePage = () => {
                     <i className="material-icons prefix">event</i>
                     <label>Дата начала работ</label>
                     <div style={{marginLeft: '200px'}}>
-                        <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                        <DatePicker
+                            selected={startDate}
+                            onChange={date => setStartDate(date)}
+                            locale="ru"
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                            timeCaption="time"
+                            dateFormat="MMMM d, yyyy h:mm aa"
+
+                        />
                     </div>
 
                 </div>
