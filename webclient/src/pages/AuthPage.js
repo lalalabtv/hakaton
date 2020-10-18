@@ -56,7 +56,7 @@ export const AuthPage = () => {
                                        onChange={changeHandler}
                                        value={form.username}
                                 />
-                                <label htmlFor="username">Email</label>
+                                <label htmlFor="username">Имя пользователя</label>
                             </div>
 
                             <div className="input-field" style={{marginTop:'15px'}}>
